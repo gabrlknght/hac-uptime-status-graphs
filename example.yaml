@@ -1,0 +1,210 @@
+type: vertical-stack
+cards:
+  - type: horizontal-stack
+    cards:
+      - type: custom:mushroom-title-card
+        title: Harbinger
+        subtitle: Uptime Status
+      - type: custom:mushroom-template-card
+        primary: |
+          {% set services = [
+            'sensor.service_1_status',
+            'sensor.service_2_status',
+            'sensor.service_3_status',
+            'sensor.service_4_status',
+            'sensor.service_5_status',
+            'sensor.service_6_status',
+            'sensor.service_7_status'
+          ] %}
+          {% set all_up = true %}
+          {% for service in services %}
+            {% if not is_state(service, 'up') %}
+              {% set all_up = false %}
+            {% endif %}
+          {% endfor %}
+          {% if all_up %}
+          Everything's Online 🟢
+          {% else %}
+          Something's Wrong! ❌ 
+          {% endif %}
+        secondary: |
+          {% set services = [
+            'sensor.service_1_status',
+            'sensor.service_2_status',
+            'sensor.service_3_status',
+            'sensor.service_4_status',
+            'sensor.service_5_status',
+            'sensor.service_6_status',
+            'sensor.service_7_status'
+          ] %}
+          {% set all_up = true %}
+          {% for service in services %}
+            {% if not is_state(service, 'up') %}
+              {% set all_up = false %}
+            {% endif %}
+          {% endfor %}
+          {% if all_up %}
+          All Services Working 💪
+          {% else %}
+          Inspect Status Cards 👀
+          {% endif %}
+        icon: |
+          {% set services = [
+            'sensor.service_1_status',
+            'sensor.service_2_status',
+            'sensor.service_3_status',
+            'sensor.service_4_status',
+            'sensor.service_5_status',
+            'sensor.service_6_status',
+            'sensor.service_7_status'
+          ] %}
+          {% set all_up = true %}
+          {% for service in services %}
+            {% if not is_state(service, 'up') %}
+              {% set all_up = false %}
+            {% endif %}
+          {% endfor %}
+          {% if all_up %}
+            mdi:check-circle
+          {% else %}
+            mdi:close-circle
+          {% endif %}
+  - type: horizontal-stack
+    cards:
+      - type: custom:stack-in-card
+        mode: horizontal
+        cards:
+          - type: custom:mushroom-template-card
+            entity: sensor.service_1_status
+            primary: ""
+            icon_color: blue
+            badge_icon: |
+              {% if is_state('sensor.service_1_status', 'up') %}  
+                mdi:check
+              {% elif is_state('sensor.service_1_status', 'unknown') %}
+                mdi:help-circle
+              {% else %}
+                mdi:close
+              {% endif %}   
+            badge_color: |
+              {% if is_state('sensor.service_1_status', 'up') %}  
+                green
+              {% elif is_state('sensor.service_1_status', 'unknown') %}
+                orange
+              {% else %}
+                red
+              {% endif %}                    
+            icon: mdi:home-assistant
+            fill_container: true
+            layout: horizontal
+            tap_action:
+              action: none
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            card_mod:
+              style:
+                .: |
+                  ha-card{
+                    border-color: transparent
+                  }
+          - type: custom:uptime-card
+            entity: sensor.service_1_status
+            hours_to_show: 48
+            ok:
+              - up
+            alignment:
+              tooltip_first: true
+            show:
+              footer: false
+              header: false
+              status: false
+            bar:
+              height: 80
+              round: 10
+              spacing: 10
+              amount: 24
+            card_mod:
+              style: |
+                ha-card {
+                  position: relative;
+                  top: 0px;
+                  left: -67%;
+                  overflow: visible !important;
+                  width: 165%;
+                  border-color: transparent;
+                }
+      - type: custom:stack-in-card
+        mode: horizontal
+        cards:
+          - type: custom:mushroom-template-card
+            entity: sensor.service_2_status
+            primary: ""
+            icon_color: blue
+            badge_icon: >
+              {% if is_state('sensor.service_2_status', 'up') %}  
+                mdi:check
+              {% elif is_state('sensor.service_2_status', 'unknown') %}
+                mdi:help-circle
+              {% else %}
+                mdi:close
+              {% endif %}   
+            badge_color: >
+              {% if is_state('sensor.service_2_status', 'up') %}  
+                green
+              {% elif is_state('sensor.service_2_status', 'unknown') %}
+                orange
+              {% else %}
+                red
+              {% endif %}                    
+            icon: mdi:plex
+            fill_container: true
+            layout: horizontal
+            tap_action:
+              action: none
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            card_mod:
+              style:
+                .: |
+                  ha-card{
+                    border-color: transparent
+                  }
+          - type: custom:uptime-card
+            entity: sensor.service_2_status
+            hours_to_show: 48
+            ok:
+              - up
+            alignment:
+              tooltip_first: true
+            show:
+              footer: false
+              header: false
+              status: false
+            bar:
+              height: 80
+              round: 10
+              spacing: 10
+              amount: 24
+            card_mod:
+              style: |
+                ha-card {
+                  position: relative;
+                  top: 0px;
+                  left: -67%;
+                  overflow: visible !important;
+                  width: 150%;
+                  border-color: transparent;
+                }
+# Repeat blocks for additional services (service_3 ... service_7)
+# Default icon mapping suggestion:
+# service_1: mdi:home-assistant
+# service_2: mdi:plex
+# service_3: mdi:pi (pi-hole)
+# service_4: mdi:book-open-variant (kiwix)
+# service_5: mdi:robot (ollama)
+# service_6: mdi:web (open web ui)
+# service_7: mdi:chip (lm studio)

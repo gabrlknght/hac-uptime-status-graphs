@@ -76,11 +76,3 @@ Built with Mushroom, `stack-in-card`, and `uptime-card`.
 
 ## License
 Apache-2.0 — see the official license text for terms.
-
----
-
-If you want, I can:
-- Add a short section showing how to wire an `input_select` for dynamic colors.
-- Create a small screenshot guide (placeholders provided) and commit both files to a new `ha-customs/uptime-status-graphs` repo folder.
-
-Tell me which next step you prefer.

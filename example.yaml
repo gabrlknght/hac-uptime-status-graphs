@@ -206,5 +206,5 @@ cards:
 # service_3: mdi:pi (pi-hole)
 # service_4: mdi:book-open-variant (kiwix)
 # service_5: mdi:robot (ollama)
-# service_6: mdi:web (open web ui)
-# service_7: mdi:chip (lm studio)
+# service_6: mdi:web (local ai server)
+# service_7: mdi:chip (something else)

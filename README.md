@@ -1,2 +1,2 @@
-# hac-uptime-status-graphs-
+# hac-uptime-status-graphs
 Custom YAML Configs + Cards for Home Assistant

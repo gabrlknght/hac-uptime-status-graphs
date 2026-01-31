@@ -4,7 +4,7 @@
 
 A compact Home Assistant Lovelace layout that provides service status tiles and uptime graphs. Built from Mushroom template cards, `stack-in-card`, and `uptime-card`, this example dashboard is easy to adapt for your own sensors.
 
-Repository: `ha-customs/uptime-status-graphs`
+Repository: `hac-uptime-status-graphs`
 
 License: Apache-2.0 (permissive)
 

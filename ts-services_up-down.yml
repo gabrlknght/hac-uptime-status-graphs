@@ -1,0 +1,23 @@
+# Services Up/Down Check
+template:
+  - sensor:        
+      - name: "Services All Up"
+        unique_id: services_all_up
+        state: >-
+          {% set services = [
+            'sensor.service_a_status',
+            'sensor.service_b_status',
+            'sensor.service_c_status',
+            'sensor.service_d_status',
+            'sensor.service_e_status',
+            'sensor.service_f_status',
+            'sensor.service_g_status',
+            'sensor.service_h_status'
+          ] %}
+          {% set all_up = true %}
+          {% for service in services %}
+            {% if not is_state(service, 'up') %}
+              {% set all_up = false %}
+            {% endif %}
+          {% endfor %}
+          {% if all_up %}up{% else %}down{% endif %}

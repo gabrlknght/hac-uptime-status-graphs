@@ -68,13 +68,15 @@ This example contains only entity IDs and no credentials or hostnames. Before pu
 
 ## Example usage
 
-1. Copy `example.yaml` into a Lovelace manual card.
+0. Add the content of `ts-services_up-down.yml` to your Home Assistant's `configuration.yml` settings, under 'Sensors'. Make sure to customize the sensor names to your own systems' names. Restart HA. 
+1. Copy the code `example.yaml` into a Lovelace manual card.
 2. Replace the `sensor.service_*_status` placeholders with your sensors.
 3. Optionally adjust `hours_to_show` and `bar.amount` in the `uptime-card` sections.
 4. Use ok=['up'] or an equivalent setting to help translate the correct bar values as 'on' if your sensor reports back a different status value.
 
 ## Files
 - `example.yaml` — sanitized Lovelace YAML with placeholders.
+- `ts-services_up-down.yml` - meta service up/down check; template sensor.
 
 ## Credits
 Built with Mushroom, `stack-in-card`, and `uptime-card`.

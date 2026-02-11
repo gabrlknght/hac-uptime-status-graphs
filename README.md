@@ -23,6 +23,11 @@ This repo contains:
 
 ## Prerequisites
 
+Before using this dashboard you must first have a status-monitoring service and the Home Assistant Community Store (HACS) configured:
+
+- Uptime Kuma: this example expects uptime/status monitors created in Uptime Kuma to provide the status sensors that power the uptime graphs and status tiles. See https://uptime.kuma.pet/ for install and usage information.
+- HACS (Home Assistant Community Store): this project uses several custom Lovelace cards which are easiest to install and manage via HACS. Ensure HACS is installed and configured before proceeding: https://hacs.xyz/docs/use/configuration/basic/
+
 Install the following custom cards (HACS recommended) before using the example YAML:
 - mushroom (mushroom-template-card, mushroom-title-card)
 - custom:stack-in-card
@@ -32,7 +37,7 @@ Recommended Home Assistant version: latest stable release.
 
 ## Install (Manual)
 
-1. Install the dependencies above via HACS (recommended) or add them manually to `www/community/`.
+1. Install and configure HACS (see the link in Prerequisites), then install the dependencies above via HACS (recommended) or add them manually to `www/community/`.
 2. Open your Lovelace dashboard (Edit). Choose manual card and paste the contents of `example.yaml` (or use `raw config editor`).
 3. Replace the placeholder sensor entity IDs with your own.
 

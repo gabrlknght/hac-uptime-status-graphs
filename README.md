@@ -6,7 +6,7 @@ A compact Home Assistant Lovelace layout that provides service status tiles and 
 
 Repository: `hac-uptime-status-graphs`
 
-License: Apache-2.0 (permissive)
+License: MIT License
 
 ---
 

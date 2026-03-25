@@ -82,4 +82,4 @@ This example contains only entity IDs and no credentials or hostnames. Before pu
 Built with Mushroom, `stack-in-card`, and `uptime-card`.
 
 ## License
-Apache-2.0 — see the official license text for terms.
+MIT License — see the official [LICENSE]LICENSE text for terms.

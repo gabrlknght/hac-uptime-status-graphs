@@ -1,0 +1,729 @@
+type: vertical-stack
+cards:
+  - type: horizontal-stack
+    cards:
+      - type: custom:mushroom-title-card
+        title: Network 💢
+        subtitle: Uptime Status
+        alignment: start
+      - type: custom:mushroom-template-card
+        entity: sensor.services_all_up
+        entities:
+          - sensor.service_a_status
+          - sensor.service_b_status
+          - sensor.service_c_status
+          - sensor.service_d_status
+          - sensor.service_e_status
+          - sensor.service_f_status
+          - sensor.service_g_status
+          - sensor.service_h_status
+        primary: >
+          {% if is_state('sensor.services_all_up', 'up') %} Everything's Online
+          🟢 {% elif is_state('sensor.services_all_up', 'unknown') %} Status
+          Unknown ❓ {% else %} Something's Wrong! ❌ {% endif %}
+        secondary: >
+          {% if is_state('sensor.services_all_up', 'up') %}
+            All Services Working 💪
+          {% else %}
+            {% set services = {
+              'sensor.service_a_status': 'Service A',
+              'sensor.service_b_status': 'Service B',
+              'sensor.service_c_status': 'Service C',
+              'sensor.service_d_status': 'Service D',
+              'sensor.service_e_status': 'Service E',
+              'sensor.service_f_status': 'Service F',
+              'sensor.service_g_status': 'Service G',
+              'sensor.service_h_status': 'Service H'
+            } %}
+            {% set ns = namespace(down=[], unknown=[]) %}
+            {% for entity, label in services.items() %}
+              {% if is_state(entity, 'unknown') %}
+                {% set ns.unknown = ns.unknown + [label] %}
+              {% elif not is_state(entity, 'up') %}
+                {% set ns.down = ns.down + [label] %}
+              {% endif %}
+            {% endfor %}
+            {% if ns.down %}Down: {{ ns.down | join(', ') }}{% endif %}
+            {% if ns.down and ns.unknown %} | {% endif %}
+            {% if ns.unknown %}Unknown: {{ ns.unknown | join(', ') }}{% endif %}
+          {% endif %}
+        icon: |
+          {% if is_state('sensor.services_all_up', 'up') %}
+            mdi:check-circle
+          {% elif is_state('sensor.services_all_up', 'unknown') %}
+            mdi:help-circle
+          {% else %}
+            mdi:close-circle
+          {% endif %}
+        color: |
+          {% if is_state('sensor.services_all_up', 'up') %}
+            green
+          {% elif is_state('sensor.services_all_up', 'unknown') %}
+            orange
+          {% else %}
+            red
+          {% endif %}
+        features_position: bottom
+        vertical: true
+        card_mod:
+          style: |
+            ha-card {
+              border-color: transparent;
+              box-shadow: none;
+            }
+            ha-card ha-icon, ha-card .icon {
+              transform: scale(2);
+              width: 40px;
+              height: 40px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+  - type: custom:auto-entities
+    card:
+      type: grid
+      columns: 2
+      square: false
+    card_param: cards
+    filter:
+      include:
+        - type: custom:stack-in-card
+          mode: horizontal
+          cards:
+            - type: custom:mushroom-template-card
+              entity: sensor.service_a_status
+              primary: Service A
+              secondary: |
+                {% if is_state('sensor.service_a_status', 'up') %}
+                  Online
+                {% elif is_state('sensor.service_a_status', 'unknown') %}
+                  Unknown
+                {% else %}
+                  Offline
+                {% endif %}
+              icon_color: blue
+              badge_icon: |
+                {% if is_state('sensor.service_a_status', 'up') %}
+                  mdi:check
+                {% elif is_state('sensor.service_a_status', 'unknown') %}
+                  mdi:help-circle
+                {% else %}
+                  mdi:close
+                {% endif %}
+              badge_color: |
+                {% if is_state('sensor.service_a_status', 'up') %}
+                  green
+                {% elif is_state('sensor.service_a_status', 'unknown') %}
+                  orange
+                {% else %}
+                  red
+                {% endif %}
+              icon: mdi:pi-hole
+              fill_container: true
+              layout: horizontal
+              tap_action:
+                action: more-info
+              hold_action:
+                action: none
+              double_tap_action:
+                action: none
+              card_mod:
+                style:
+                  .: |
+                    ha-card {
+                      border-color: transparent;
+                      background: var(--secondary-background-color, rgba(0,0,0,0.2)) !important;
+                    }
+                  mushroom-state-info$: |
+                    .primary,
+                    .secondary {
+                      white-space: normal !important;
+                      overflow: visible !important;
+                      text-overflow: clip !important;
+                    }
+            - type: custom:uptime-card
+              entity: sensor.service_a_status
+              hours_to_show: 48
+              ok:
+                - up
+              alignment:
+                tooltip_first: true
+              show:
+                footer: false
+                header: false
+                status: false
+              bar:
+                height: 80
+                round: 10
+                spacing: 10
+                amount: 24
+              card_mod:
+                style: |
+                  ha-card {
+                    position: relative;
+                    top: 0px;
+                    left: -67%;
+                    overflow: visible !important;
+                    width: 150%;
+                    border-color: transparent;
+                  }
+        - type: custom:stack-in-card
+          mode: horizontal
+          cards:
+            - type: custom:mushroom-template-card
+              entity: sensor.service_b_status
+              primary: Service B
+              secondary: |
+                {% if is_state('sensor.service_b_status', 'up') %}
+                  Online
+                {% elif is_state('sensor.service_b_status', 'unknown') %}
+                  Unknown
+                {% else %}
+                  Offline
+                {% endif %}
+              icon_color: blue
+              badge_icon: |
+                {% if is_state('sensor.service_b_status', 'up') %}
+                  mdi:check
+                {% elif is_state('sensor.service_b_status', 'unknown') %}
+                  mdi:help-circle
+                {% else %}
+                  mdi:close
+                {% endif %}
+              badge_color: |
+                {% if is_state('sensor.service_b_status', 'up') %}
+                  green
+                {% elif is_state('sensor.service_b_status', 'unknown') %}
+                  orange
+                {% else %}
+                  red
+                {% endif %}
+              icon: mdi:home-assistant
+              fill_container: true
+              layout: horizontal
+              tap_action:
+                action: more-info
+              hold_action:
+                action: none
+              double_tap_action:
+                action: none
+              card_mod:
+                style:
+                  .: |
+                    ha-card {
+                      border-color: transparent;
+                      background: var(--secondary-background-color, rgba(0,0,0,0.2)) !important;
+                    }
+                  mushroom-state-info$: |
+                    .primary,
+                    .secondary {
+                      white-space: normal !important;
+                      overflow: visible !important;
+                      text-overflow: clip !important;
+                    }
+            - type: custom:uptime-card
+              entity: sensor.service_b_status
+              hours_to_show: 48
+              ok:
+                - up
+              alignment:
+                tooltip_first: true
+              show:
+                footer: false
+                header: false
+                status: false
+              bar:
+                height: 80
+                round: 10
+                spacing: 10
+                amount: 24
+              card_mod:
+                style: |
+                  ha-card {
+                    position: relative;
+                    top: 0px;
+                    left: -67%;
+                    overflow: visible !important;
+                    width: 150%;
+                    border-color: transparent;
+                  }
+        - type: custom:stack-in-card
+          mode: horizontal
+          cards:
+            - type: custom:mushroom-template-card
+              entity: sensor.service_c_status
+              primary: Service C
+              secondary: |
+                {% if is_state('sensor.service_c_status', 'up') %}
+                  Online
+                {% elif is_state('sensor.service_c_status', 'unknown') %}
+                  Unknown
+                {% else %}
+                  Offline
+                {% endif %}
+              icon_color: blue
+              badge_icon: |
+                {% if is_state('sensor.service_c_status', 'up') %}
+                  mdi:check
+                {% elif is_state('sensor.service_c_status', 'unknown') %}
+                  mdi:help-circle
+                {% else %}
+                  mdi:close
+                {% endif %}
+              badge_color: |
+                {% if is_state('sensor.service_c_status', 'up') %}
+                  green
+                {% elif is_state('sensor.service_c_status', 'unknown') %}
+                  orange
+                {% else %}
+                  red
+                {% endif %}
+              icon: mdi:book-open-variant
+              fill_container: true
+              layout: horizontal
+              tap_action:
+                action: more-info
+              hold_action:
+                action: none
+              double_tap_action:
+                action: none
+              card_mod:
+                style:
+                  .: |
+                    ha-card {
+                      border-color: transparent;
+                      background: var(--secondary-background-color, rgba(0,0,0,0.2)) !important;
+                    }
+                  mushroom-state-info$: |
+                    .primary,
+                    .secondary {
+                      white-space: normal !important;
+                      overflow: visible !important;
+                      text-overflow: clip !important;
+                    }
+            - type: custom:uptime-card
+              entity: sensor.service_c_status
+              hours_to_show: 48
+              ok:
+                - up
+              alignment:
+                tooltip_first: true
+              show:
+                footer: false
+                header: false
+                status: false
+              bar:
+                height: 80
+                round: 10
+                spacing: 10
+                amount: 24
+              card_mod:
+                style: |
+                  ha-card {
+                    position: relative;
+                    top: 0px;
+                    left: -67%;
+                    overflow: visible !important;
+                    width: 150%;
+                    border-color: transparent;
+                  }
+        - type: custom:stack-in-card
+          mode: horizontal
+          cards:
+            - type: custom:mushroom-template-card
+              entity: sensor.service_d_status
+              primary: Service D
+              secondary: |
+                {% if is_state('sensor.service_d_status', 'up') %}
+                  Online
+                {% elif is_state('sensor.service_d_status', 'unknown') %}
+                  Unknown
+                {% else %}
+                  Offline
+                {% endif %}
+              icon_color: blue
+              badge_icon: |
+                {% if is_state('sensor.service_d_status', 'up') %}
+                  mdi:check
+                {% elif is_state('sensor.service_d_status', 'unknown') %}
+                  mdi:help-circle
+                {% else %}
+                  mdi:close
+                {% endif %}
+              badge_color: |
+                {% if is_state('sensor.service_d_status', 'up') %}
+                  green
+                {% elif is_state('sensor.service_d_status', 'unknown') %}
+                  orange
+                {% else %}
+                  red
+                {% endif %}
+              icon: mdi:robot
+              fill_container: true
+              layout: horizontal
+              tap_action:
+                action: more-info
+              hold_action:
+                action: none
+              double_tap_action:
+                action: none
+              card_mod:
+                style:
+                  .: |
+                    ha-card {
+                      border-color: transparent;
+                      background: var(--secondary-background-color, rgba(0,0,0,0.2)) !important;
+                    }
+                  mushroom-state-info$: |
+                    .primary,
+                    .secondary {
+                      white-space: normal !important;
+                      overflow: visible !important;
+                      text-overflow: clip !important;
+                    }
+            - type: custom:uptime-card
+              entity: sensor.service_d_status
+              hours_to_show: 48
+              ok:
+                - up
+              alignment:
+                tooltip_first: true
+              show:
+                footer: false
+                header: false
+                status: false
+              bar:
+                height: 80
+                round: 10
+                spacing: 10
+                amount: 24
+              card_mod:
+                style: |
+                  ha-card {
+                    position: relative;
+                    top: 0px;
+                    left: -67%;
+                    overflow: visible !important;
+                    width: 150%;
+                    border-color: transparent;
+                  }
+        - type: custom:stack-in-card
+          mode: horizontal
+          cards:
+            - type: custom:mushroom-template-card
+              entity: sensor.service_e_status
+              primary: Service E
+              secondary: |
+                {% if is_state('sensor.service_e_status', 'up') %}
+                  Online
+                {% elif is_state('sensor.service_e_status', 'unknown') %}
+                  Unknown
+                {% else %}
+                  Offline
+                {% endif %}
+              icon_color: blue
+              badge_icon: |
+                {% if is_state('sensor.service_e_status', 'up') %}
+                  mdi:check
+                {% elif is_state('sensor.service_e_status', 'unknown') %}
+                  mdi:help-circle
+                {% else %}
+                  mdi:close
+                {% endif %}
+              badge_color: |
+                {% if is_state('sensor.service_e_status', 'up') %}
+                  green
+                {% elif is_state('sensor.service_e_status', 'unknown') %}
+                  orange
+                {% else %}
+                  red
+                {% endif %}
+              icon: mdi:plex
+              fill_container: true
+              layout: horizontal
+              tap_action:
+                action: more-info
+              hold_action:
+                action: none
+              double_tap_action:
+                action: none
+              card_mod:
+                style:
+                  .: |
+                    ha-card {
+                      border-color: transparent;
+                      background: var(--secondary-background-color, rgba(0,0,0,0.2)) !important;
+                    }
+                  mushroom-state-info$: |
+                    .primary,
+                    .secondary {
+                      white-space: normal !important;
+                      overflow: visible !important;
+                      text-overflow: clip !important;
+                    }
+            - type: custom:uptime-card
+              entity: sensor.service_e_status
+              hours_to_show: 48
+              ok:
+                - up
+              alignment:
+                tooltip_first: true
+              show:
+                footer: false
+                header: false
+                status: false
+              bar:
+                height: 80
+                round: 10
+                spacing: 10
+                amount: 24
+              card_mod:
+                style: |
+                  ha-card {
+                    position: relative;
+                    top: 0px;
+                    left: -67%;
+                    overflow: visible !important;
+                    width: 150%;
+                    border-color: transparent;
+                  }
+        - type: custom:stack-in-card
+          mode: horizontal
+          cards:
+            - type: custom:mushroom-template-card
+              entity: sensor.service_f_status
+              primary: Service F
+              secondary: |
+                {% if is_state('sensor.service_f_status', 'up') %}
+                  Online
+                {% elif is_state('sensor.service_f_status', 'unknown') %}
+                  Unknown
+                {% else %}
+                  Offline
+                {% endif %}
+              icon_color: blue
+              badge_icon: |
+                {% if is_state('sensor.service_f_status', 'up') %}
+                  mdi:check
+                {% elif is_state('sensor.service_f_status', 'unknown') %}
+                  mdi:help-circle
+                {% else %}
+                  mdi:close
+                {% endif %}
+              badge_color: |
+                {% if is_state('sensor.service_f_status', 'up') %}
+                  green
+                {% elif is_state('sensor.service_f_status', 'unknown') %}
+                  orange
+                {% else %}
+                  red
+                {% endif %}
+              icon: mdi:cloud
+              fill_container: true
+              layout: horizontal
+              tap_action:
+                action: more-info
+              hold_action:
+                action: none
+              double_tap_action:
+                action: none
+              card_mod:
+                style:
+                  .: |
+                    ha-card {
+                      border-color: transparent;
+                      background: var(--secondary-background-color, rgba(0,0,0,0.2)) !important;
+                    }
+                  mushroom-state-info$: |
+                    .primary,
+                    .secondary {
+                      white-space: normal !important;
+                      overflow: visible !important;
+                      text-overflow: clip !important;
+                    }
+            - type: custom:uptime-card
+              entity: sensor.service_f_status
+              hours_to_show: 48
+              ok:
+                - up
+              alignment:
+                tooltip_first: true
+              show:
+                footer: false
+                header: false
+                status: false
+              bar:
+                height: 80
+                round: 10
+                spacing: 10
+                amount: 24
+              card_mod:
+                style: |
+                  ha-card {
+                    position: relative;
+                    top: 0px;
+                    left: -67%;
+                    overflow: visible !important;
+                    width: 150%;
+                    border-color: transparent;
+                  }
+        - type: custom:stack-in-card
+          mode: horizontal
+          cards:
+            - type: custom:mushroom-template-card
+              entity: sensor.service_g_status
+              primary: Service G
+              secondary: |
+                {% if is_state('sensor.service_g_status', 'up') %}
+                  Online
+                {% elif is_state('sensor.service_g_status', 'unknown') %}
+                  Unknown
+                {% else %}
+                  Offline
+                {% endif %}
+              icon_color: blue
+              badge_icon: |
+                {% if is_state('sensor.service_g_status', 'up') %}
+                  mdi:check
+                {% elif is_state('sensor.service_g_status', 'unknown') %}
+                  mdi:help-circle
+                {% else %}
+                  mdi:close
+                {% endif %}
+              badge_color: |
+                {% if is_state('sensor.service_g_status', 'up') %}
+                  green
+                {% elif is_state('sensor.service_g_status', 'unknown') %}
+                  orange
+                {% else %}
+                  red
+                {% endif %}
+              icon: mdi:web
+              fill_container: true
+              layout: horizontal
+              tap_action:
+                action: more-info
+              hold_action:
+                action: none
+              double_tap_action:
+                action: none
+              card_mod:
+                style:
+                  .: |
+                    ha-card {
+                      border-color: transparent;
+                      background: var(--secondary-background-color, rgba(0,0,0,0.2)) !important;
+                    }
+                  mushroom-state-info$: |
+                    .primary,
+                    .secondary {
+                      white-space: normal !important;
+                      overflow: visible !important;
+                      text-overflow: clip !important;
+                    }
+            - type: custom:uptime-card
+              entity: sensor.service_g_status
+              hours_to_show: 48
+              ok:
+                - up
+              alignment:
+                tooltip_first: true
+              show:
+                footer: false
+                header: false
+                status: false
+              bar:
+                height: 80
+                round: 10
+                spacing: 10
+                amount: 24
+              card_mod:
+                style: |
+                  ha-card {
+                    position: relative;
+                    top: 0px;
+                    left: -67%;
+                    overflow: visible !important;
+                    width: 150%;
+                    border-color: transparent;
+                  }
+        - type: custom:stack-in-card
+          mode: horizontal
+          cards:
+            - type: custom:mushroom-template-card
+              entity: sensor.service_h_status
+              primary: Service H
+              secondary: |
+                {% if is_state('sensor.service_h_status', 'up') %}
+                  Online
+                {% elif is_state('sensor.service_h_status', 'unknown') %}
+                  Unknown
+                {% else %}
+                  Offline
+                {% endif %}
+              icon_color: blue
+              badge_icon: |
+                {% if is_state('sensor.service_h_status', 'up') %}
+                  mdi:check
+                {% elif is_state('sensor.service_h_status', 'unknown') %}
+                  mdi:help-circle
+                {% else %}
+                  mdi:close
+                {% endif %}
+              badge_color: |
+                {% if is_state('sensor.service_h_status', 'up') %}
+                  green
+                {% elif is_state('sensor.service_h_status', 'unknown') %}
+                  orange
+                {% else %}
+                  red
+                {% endif %}
+              icon: mdi:application-brackets-outline
+              fill_container: true
+              layout: horizontal
+              tap_action:
+                action: more-info
+              hold_action:
+                action: none
+              double_tap_action:
+                action: none
+              card_mod:
+                style:
+                  .: |
+                    ha-card {
+                      border-color: transparent;
+                      background: var(--secondary-background-color, rgba(0,0,0,0.2)) !important;
+                    }
+                  mushroom-state-info$: |
+                    .primary,
+                    .secondary {
+                      white-space: normal !important;
+                      overflow: visible !important;
+                      text-overflow: clip !important;
+                    }
+            - type: custom:uptime-card
+              entity: sensor.service_h_status
+              hours_to_show: 48
+              ok:
+                - up
+              alignment:
+                tooltip_first: true
+              show:
+                footer: false
+                header: false
+                status: false
+              bar:
+                height: 80
+                round: 10
+                spacing: 10
+                amount: 24
+              card_mod:
+                style: |
+                  ha-card {
+                    position: relative;
+                    top: 0px;
+                    left: -67%;
+                    overflow: visible !important;
+                    width: 150%;
+                    border-color: transparent;
+                  }

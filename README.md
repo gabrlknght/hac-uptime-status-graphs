@@ -18,7 +18,8 @@ A small, opinionated Lovelace layout that:
 - Uses Mushroom template cards for concise visuals and `uptime-card` for historical uptime bars.
 
 This repo contains:
-- `example.yaml` — a sanitized, copy‑ready Lovelace snippet using placeholder sensor IDs.
+- `example.yml` — a sanitized, copy‑ready Lovelace snippet using placeholder sensor IDs. One explicit card block per service — no extra HACS dependencies beyond the ones listed below.
+- `example-auto-entities.yml` — the same dashboard, but the per-service card blocks are generated from a single list via the `custom:auto-entities` card instead of hand-copied. Adding a service means editing one list instead of copy-pasting a card block. Requires the additional `auto-entities` HACS card (see Prerequisites). **This variant hasn't been verified against a live Home Assistant instance yet** — test it before relying on it as your primary dashboard, and fall back to `example.yml` if anything doesn't render.
 - `README.md` — this guide.
 
 ## Prerequisites
@@ -32,6 +33,9 @@ Install the following custom cards (HACS recommended) before using the example Y
 - mushroom (mushroom-template-card, mushroom-title-card)
 - custom:stack-in-card
 - custom:uptime-card
+
+If you use `example-auto-entities.yml` instead of `example.yml`, also install:
+- auto-entities (`custom:auto-entities`)
 
 Recommended Home Assistant version: latest stable release.
 
@@ -75,8 +79,9 @@ This example contains only entity IDs and no credentials or hostnames. Before pu
 4. Use ok=['up'] or an equivalent setting to help translate the correct bar values as 'on' if your sensor reports back a different status value.
 
 ## Files
-- `example.yaml` — sanitized Lovelace YAML with placeholders.
-- `ts-services_up-down.yml` - meta service up/down check; template sensor.
+- `example.yml` — sanitized Lovelace YAML with placeholders, one explicit card block per service.
+- `example-auto-entities.yml` — same dashboard, generated from a single service list via `custom:auto-entities` (requires that extra HACS card; not yet verified live — see Files note above).
+- `ts-services_up-down.yml` - meta service up/down/unknown check; template sensor.
 
 ## Credits
 Built with Mushroom, `stack-in-card`, and `uptime-card`.

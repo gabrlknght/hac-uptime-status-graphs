@@ -19,31 +19,47 @@ cards:
           - sensor.service_h_status
         primary: >
           {% if is_state('sensor.services_all_up', 'up') %} Everything's Online
-          🟢 {% else %} Something's Wrong! ❌ {% endif %}
+          🟢 {% elif is_state('sensor.services_all_up', 'unknown') %} Status
+          Unknown ❓ {% else %} Something's Wrong! ❌ {% endif %}
         secondary: >
           {% if is_state('sensor.services_all_up', 'up') %}
             All Services Working 💪
           {% else %}
-            {% set ns = namespace(down=[]) %}
-            {% if not is_state('sensor.service_a_status', 'up') %}{% set ns.down = ns.down + ['Service A'] %}{% endif %}
-            {% if not is_state('sensor.service_b_status', 'up') %}{% set ns.down = ns.down + ['Service B'] %}{% endif %}
-            {% if not is_state('sensor.service_c_status', 'up') %}{% set ns.down = ns.down + ['Service C'] %}{% endif %}
-            {% if not is_state('sensor.service_d_status', 'up') %}{% set ns.down = ns.down + ['Service D'] %}{% endif %}
-            {% if not is_state('sensor.service_e_status', 'up') %}{% set ns.down = ns.down + ['Service E'] %}{% endif %}
-            {% if not is_state('sensor.service_f_status', 'up') %}{% set ns.down = ns.down + ['Service F'] %}{% endif %}
-            {% if not is_state('sensor.service_g_status', 'up') %}{% set ns.down = ns.down + ['Service G'] %}{% endif %}
-            {% if not is_state('sensor.service_h_status', 'up') %}{% set ns.down = ns.down + ['Service H'] %}{% endif %}
-            Down: {{ ns.down | join(', ') }}
+            {% set services = {
+              'sensor.service_a_status': 'Service A',
+              'sensor.service_b_status': 'Service B',
+              'sensor.service_c_status': 'Service C',
+              'sensor.service_d_status': 'Service D',
+              'sensor.service_e_status': 'Service E',
+              'sensor.service_f_status': 'Service F',
+              'sensor.service_g_status': 'Service G',
+              'sensor.service_h_status': 'Service H'
+            } %}
+            {% set ns = namespace(down=[], unknown=[]) %}
+            {% for entity, label in services.items() %}
+              {% if is_state(entity, 'unknown') %}
+                {% set ns.unknown = ns.unknown + [label] %}
+              {% elif not is_state(entity, 'up') %}
+                {% set ns.down = ns.down + [label] %}
+              {% endif %}
+            {% endfor %}
+            {% if ns.down %}Down: {{ ns.down | join(', ') }}{% endif %}
+            {% if ns.down and ns.unknown %} | {% endif %}
+            {% if ns.unknown %}Unknown: {{ ns.unknown | join(', ') }}{% endif %}
           {% endif %}
         icon: |
           {% if is_state('sensor.services_all_up', 'up') %}
             mdi:check-circle
+          {% elif is_state('sensor.services_all_up', 'unknown') %}
+            mdi:help-circle
           {% else %}
             mdi:close-circle
           {% endif %}
         color: |
           {% if is_state('sensor.services_all_up', 'up') %}
             green
+          {% elif is_state('sensor.services_all_up', 'unknown') %}
+            orange
           {% else %}
             red
           {% endif %}

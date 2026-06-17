@@ -1,0 +1,110 @@
+---
+title: "Using automation blueprints"
+source: "https://www.home-assistant.io/docs/automation/using_blueprints/"
+author:
+  - "[[Home Assistant]]"
+published:
+created: 2026-06-17
+description: "Blueprints are ready-made automations shared by the Home Assistant community. Install a blueprint and create your own automation by filling in a few fields, ..."
+tags:
+  - "clippings"
+---
+Blueprints are the easiest way to add an automation to your Home Assistant. They are ready-made automations shared by the Home Assistant community: someone else has already done the thinking and the writing, and you just plug in your own devices.
+
+You can find blueprints for almost any common use case, from “turn the lights on when motion is detected” to “announce the weather every morning at 7” to “notify me when the laundry is done”. You install a blueprint once and can use it as many times as you like, with different devices and settings each time.
+
+Quick links:
+
+- [Blueprints in the Home Assistant forums](https://www.home-assistant.io/get-blueprints)
+
+## Blueprint automations
+
+Automations based on a blueprint need to be configured. What needs to be configured differs by blueprint.
+
+1. To create your first automation based on a blueprint, go to [**Settings** > **Automations & scenes** > **Blueprints**](https://my.home-assistant.io/redirect/blueprints).
+2. Find the blueprint that you want to use and select **Create automation**.
+	- This opens the automation editor with the blueprint selected.
+3. Give it a name and configure the blueprint.
+4. Select the blue **Save automation** button in the bottom right corner.
+
+Done! If you want to revisit the configuration values, go to [**Settings** > **Automations & scenes** > **Blueprints**](https://my.home-assistant.io/redirect/blueprints).
+
+## Importing blueprints
+
+Home Assistant can import blueprints from the Home Assistant forums, GitHub, and GitHub gists.
+
+1. To import a blueprint, first [find a blueprint you want to import](https://www.home-assistant.io/get-blueprints).
+	- If you just want to practice importing, you can use this URL:
+		```text
+		https://github.com/home-assistant/core/blob/dev/homeassistant/components/automation/blueprints/motion_light.yaml
+		```
+2. Go to [**Settings** > **Automations & scenes** > **Blueprints**](https://my.home-assistant.io/redirect/blueprints).
+3. Select the blue **[Import Blueprint](https://my.home-assistant.io/redirect/blueprint_import)** button in the bottom right.
+	- A new dialog will pop-up asking you for the URL.
+4. Enter the URL and select **Preview**.
+	- This will load the blueprint and show a preview in the import dialog.
+		- You can change the name and finish the import.
+
+The blueprint can now be used for creating automations.
+
+## Editing an imported blueprint
+
+You can tweak an imported blueprint by “taking control” of this blueprint. Home Assistant then converts the blueprint automation into a regular automation, allowing you to make any tweak without having to fully re-invent the wheel.
+
+To edit an imported blueprint, follow these steps:
+
+1. Go to [**Settings** > **Automations & scenes** > **Blueprints**](https://my.home-assistant.io/redirect/blueprints).
+2. Select the blueprint from the list.
+3. Select the and select **Take control**.
+4. A preview of the automation is shown.
+	- **Info**: By taking control, the blueprint is converted into an automation. You won’t be able to convert this back into a blueprint.
+		- To convert it into an automation and take control, select **Yes**.
+		- If you change your mind and want to keep the blueprint, select **No**.
+	![Screencast showing how to take control of a blueprint](https://www.home-assistant.io/images/blueprints/blueprint_take_control.webp)
+
+## Re-importing a blueprint
+
+Blueprints created by the community may go through multiple revisions. Sometimes a user creates a blueprint, the community provides feedback, new functionality is added.
+
+The quickest way to get these changes, is by re-importing the blueprint. This will overwrite the blueprint you currently have.
+
+> [!caution] :host{display:inline-block;vertical-align:-0.125em}span,svg{display:block} Caution
+> **Before you do this**: If the re-imported blueprint is not compatible, it can break your automations.
+> 
+> - In this case, you will need to manually adjust your automations.
+
+### To re-import a blueprint
+
+1. Go to [**Settings** > **Automations & scenes** > **Blueprints**](https://my.home-assistant.io/redirect/blueprints).
+2. On the blueprint that you want to re-import, select the three dots menu, and select **Re-import blueprint**.
+
+## Updating an imported blueprint in YAML
+
+Blueprints created by the community may go through multiple revisions. Sometimes a user creates a blueprint, the community provides feedback, new functionality is added.
+
+If you do not want to [re-import the blueprint](https://www.home-assistant.io/docs/automation/using_blueprints/#re-importing-a-blueprint) for some reason, you can manually edit its YAMLYAML is a human-readable data serialization language. It is used to store and transmit data in a structured format. In Home Assistant, YAML is used for configuration, for example in the `configuration.yaml` or `automations.yaml` files. [\[Learn more\]](https://www.home-assistant.io/docs/configuration/yaml/) content to keep it up to date:
+
+1. Go to the blueprints directory (`blueprints/automation/`). The location of this directory depends on the installation type. It’s similar to how you find [`configuration.yaml`](https://www.home-assistant.io/docs/configuration/#editing-configurationyaml).
+2. Next, you must find the blueprint to update. The path name of a blueprint consists of:
+	- The username of the user that created it. The name depends on the source of the blueprint: the forum, or GitHub.
+		- The name of the YAMLYAML is a human-readable data serialization language. It is used to store and transmit data in a structured format. In Home Assistant, YAML is used for configuration, for example in the `configuration.yaml` or `automations.yaml` files. [\[Learn more\]](https://www.home-assistant.io/docs/configuration/yaml/) file. For the forum it’s the title of the topic in the URL, for GitHub it’s the name of the YAML file.
+3. Open the YAML file with your editor and update its contents.
+4. Reload the automations for the changes to take effect.
+
+The new changes will appear to your existing automations as well.
+
+## Finding new blueprints
+
+The Home Assistant Community forums have a specific tag for blueprints. This tag is used to collect all blueprints.
+
+[Visit the Home Assistant forums](https://www.home-assistant.io/get-blueprints)
+
+## Creating new blueprints
+
+Using blueprints is nice and easy, but what if you could create that one missing blueprint that our community definitely needs?
+
+Learn more about blueprints by [reading our tutorial on creating a blueprint](https://www.home-assistant.io/docs/blueprint/tutorial/).
+
+## Troubleshooting missing automations
+
+When you’re creating automations using blueprints and they don’t appear in the UI, make sure that you add back `automation: !include automations.yaml` from the default configuration to your `configuration.yaml` The configuration.yaml file is the main configuration file for Home Assistant. It lists the integrations to be loaded and their specific configurations. In some cases, the configuration needs to be edited manually directly in the configuration.yaml file. Most integrations can be configured in the UI. [\[Learn more\]](https://www.home-assistant.io/docs/configuration/).

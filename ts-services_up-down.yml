@@ -14,10 +14,12 @@ template:
             'sensor.service_g_status',
             'sensor.service_h_status'
           ] %}
-          {% set ns = namespace(all_up = true) %}
+          {% set ns = namespace(any_down = false, any_unknown = false) %}
           {% for service in services %}
-            {% if not is_state(service, 'up') %}
-              {% set ns.all_up = false %}
+            {% if is_state(service, 'unknown') %}
+              {% set ns.any_unknown = true %}
+            {% elif not is_state(service, 'up') %}
+              {% set ns.any_down = true %}
             {% endif %}
           {% endfor %}
-          {% if ns.all_up %}up{% else %}down{% endif %}
+          {% if ns.any_down %}down{% elif ns.any_unknown %}unknown{% else %}up{% endif %}
